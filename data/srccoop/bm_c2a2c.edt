@@ -3,48 +3,51 @@
 "config"
 {
 	"chapter" "On A Rail"
-	"nextmap" "bm_c2a3a"
+	"nextmap" "bm_c2a2d"
 	"equipment"
 	{
-		"lookup"
-		{
-			"targetname" "/^(c2a2c_equipment|c2a2c_equipment_suit)$/"
-		}
+		"item" "item_suit"
+		// Suit battery
+		"item" "item_battery"
+		"item" "item_battery"
+		"item" "item_battery"
+		"item" "item_battery"
+		// Crowbar 
+		"item" "item_weapon_crowbar"
+		// 5 grenades
+		"item" "item_weapon_frag"
+		"item" "item_weapon_frag"
+		"item" "item_weapon_frag"
+		"item" "item_weapon_frag"
+		"item" "item_weapon_frag"
+		// 357 + 18 reserve ammo
+		"item" "item_weapon_357"
+		"item" "item_ammo_357"
+		// MP5 + glock + 137 reserve ammo + 2 mp5 grenades
+		"item" "item_weapon_mp5"
+		"item" "item_weapon_glock"
+		"item" "item_ammo_mp5"
+		"item" "item_ammo_mp5"
+		"item" "item_ammo_mp5"
+		"item" "item_grenade_mp5"
+		"item" "item_grenade_mp5"
+		// Shotgun + 32 reserve ammo
+		"item" "item_weapon_shotgun"
+		"item" "item_ammo_shotgun"
+		"item" "item_ammo_shotgun"
+		"item" "item_ammo_shotgun"
 	}
 	"entity"
 	{
-		// closing portals not suitable for mp
+		// delay map start
 		"modify"
 		{
-			"targetname" "c2a2c_bunker_portal"
-			"set"
+			"hammerid" "805057"
+			"classname" "logic_auto"
+			"functions"
 			{
-				"targetname" ""
-				"StartOpen" "1"
+				"delay_output" "OnMapSpawn"
 			}
-		}
-		// dont close rocket blast window
-		"modify"
-		{
-			"outputs"
-			{
-				"remove"
-				{
-					"target" "blast_win"
-					"input" "SetAnimation"
-					"parameter" "idle"
-				}
-			}
-		}
-		// dont close train door
-		"delete"
-		{
-			"targetname" "c2a2c_trans_counter"
-		}
-		// train going through wall
-		"delete"
-		{
-			"targetname" "/^(track_66|track_65)$/"
 		}
 	}
 	"checkpoint"
@@ -54,29 +57,6 @@
 			"origin" "0 0 30"
 			"angles" "0 0 0"
 			"followid" "c2a2a_tram_a_base"
-		}
-		"outside"
-		{
-			"origin" "-536 -2688 108"
-			"angles" "0 90 0"
-			"triggerid" "c2a2c_exit_door"
-			"output" "OnOpen"
-		}
-		"blastoff"
-		{
-			"origin" "1312 -870 329"
-			"angles" "0 180 0"
-			"triggerid" "586665"
-			"output" "OnPressed"
-			"portal" "-536 -2688 108"
-		}
-		"blastdoor"
-		{
-			"origin" "905 -2008 77"
-			"angles" "0 0 0"
-			"triggerid" "blast_final_l"
-			"output" "OnFullyClosed"
-			"portal" "777 -2008 77"
 		}
 	}
 }

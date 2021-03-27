@@ -1,0 +1,76 @@
+#base "base/bm_sp_campaign.edt"
+
+"config"
+{
+	"chapter" "On A Rail"
+	"nextmap" "bm_c2a2g"
+	"equipment"
+	{
+		"lookup"
+		{
+			"targetname" "c2a2a_equipment"
+		}
+	}
+	"entity"
+	{
+		// fix tram trigger for multiplayer
+		"modify"
+		{
+			"classname" "trigger_multiple"
+			"targetname" "c2a2a_tram_a_trigger"
+			"outputs"
+			{
+				"modify"
+				{
+					"output" "OnStartTouch"
+					"replace"
+					{
+						"output" "OnStartTouchAll"
+					}
+				}
+				"modify"
+				{
+					"output" "OnEndTouch"
+					"replace"
+					{
+						"output" "OnEndTouchAll"
+					}
+				}
+			}
+		}
+		// fix train spawn
+		"modify"
+		{
+			"targetname" "c2a2a_tram_a_base"
+			"set"
+			{
+				"target" "b1_toptrack_3"
+				"spawnflags" "643"
+			}
+		}
+		// fix train controls
+		"modify"
+		{
+			"classname"	"logic_auto"
+			"hammerid" "1027761"
+			"outputs"
+			{
+				"add"
+				{
+					"output" "OnMapSpawn"
+					"target" "c2a2a_tram_a_base"
+					"input" "EnableControls"
+				}
+			}
+		}
+	}
+	"checkpoint"
+	{
+		"train"
+		{
+			"origin" "0 0 30"
+			"angles" "0 0 0"
+			"followid" "c2a2a_tram_a_base"
+		}
+	}
+}

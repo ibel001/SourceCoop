@@ -1,0 +1,86 @@
+#base "base/bm_sp_campaign.edt"
+
+"config"
+{
+	"chapter" "On A Rail"
+	"nextmap" "bm_c2a2f"
+	"equipment"
+	{
+		"lookup"
+		{
+			"targetname" "c2a2a_equipment"
+		}
+	}
+	"entity"
+	{
+		// block npc
+		"add"
+		{
+			"classname" "func_brush"
+			"targetname" "c2a2b_blastdoor_blocker"
+			"rendermode" "10" // dont render
+			"functions"
+			{
+				"set_model"
+				{
+					"origin" "-536 -3618 530"
+					"size" "64 175 210"
+				}
+			}
+		}
+		// remove npc blocker
+		"modify"
+		{	
+			"classname" "func_button"
+			"hammerid" "214139"
+			"outputs"
+			{
+				"add"
+				{
+					"output" "OnPressed"
+					"target" "c2a2b_blastdoor_blocker"
+					"input" "Kill"
+					"delay" "0.50"
+				}
+			}
+		}	
+		// block npc
+		"add"
+		{
+			"classname" "func_brush"
+			"targetname" "b1_tt_end_door_blocker"
+			"rendermode" "10" // dont render
+			"functions"
+			{
+				"copy_model"
+				{
+					"hammerid" "1459562"
+				}
+			}
+		}
+		// remove npc blocker
+		"modify"
+		{
+			"targetname" "tt_final_relay"
+			"outputs"
+			{
+				"add"
+				{
+					"output" "OnTrigger"
+					"target" "b1_tt_end_door_blocker"
+					"input" "Kill"
+					"delay" "0.50"
+				}
+			}
+		}
+	}
+	"checkpoint"
+	{
+		"train"
+		{
+			"origin" "0 0 30"
+			"angles" "0 0 0"
+			"followid" "c2a2a_tram_a_base"
+		}
+	}
+}
