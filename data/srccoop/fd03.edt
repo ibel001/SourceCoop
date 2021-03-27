@@ -1,0 +1,156 @@
+#base "base/further_data_campaign.edt"
+
+"config"
+{
+	"chapter" "Chapter One"
+	"nextmap" "fd02"
+	"equipment"
+	{
+		"item" "item_suit"
+		// Suit battery
+		"item" "item_battery"
+		"item" "item_battery"
+		// Crowbar 
+		"item" "item_weapon_crowbar"
+		// 2 grenades
+		"item" "item_weapon_frag"
+		"item" "item_weapon_frag"
+		// MP5 + glock + 137 reserve ammo
+		"item" "item_weapon_mp5"
+		"item" "item_weapon_glock"
+		"item" "item_ammo_mp5"
+		"item" "item_ammo_mp5"
+		"item" "item_ammo_mp5"
+	}
+	"entity"
+	{
+		// satcom elevator spawn trigger
+		"create"
+		{
+			"classname" "trigger_once"
+			"targetname" "fd03_satcom_elevator_spawn"
+			"StartDisabled" "1"
+			"spawnflags" "1"
+			"functions"
+			{
+				"set_model"
+				{
+					"origin" "64 1080 -480"
+					"size" "192 144 192"
+				}
+			}
+		}
+		// basement1 spawn trigger
+		"create"
+		{
+			"classname" "trigger_once"
+			"targetname" "fd03_basement1_spawn"
+			"spawnflags" "1"
+			"functions"
+			{
+				"copy_model"
+				{
+					"hammerid" "154098"
+				}
+			}
+		}
+		// basement3 spawn trigger
+		"create"
+		{
+			"classname" "trigger_once"
+			"targetname" "fd03_basement3_spawn"
+			"spawnflags" "1"
+			"functions"
+			{
+				"copy_model"
+				{
+					"hammerid" "154118"
+				}
+			}
+		}
+		"modify"
+		{
+			"targetname" "satcom_sat_rot"
+			"outputs"
+			{
+				"add"
+				{
+					"output" "OnFullyOpen"
+					"target" "fd03_satcom_elevator_spawn"
+					"input" "Enable"
+				}
+			}
+		}
+		// block prev changlevel
+		"modify"
+		{
+			"classname" "trigger_changelevel"
+			"targetname" "02_03_changelevel"
+			"add"
+			{
+				"classname" "func_brush"
+				"rendermode" "10" // dont render
+			}
+		}
+	}
+	"checkpoint"
+	{
+		"spawn"
+		{
+			"origin"	"2416 -1792 -428"
+			"angles"	"0 180 0"
+		}
+		"lab"
+		{
+			"origin"	"-808 -1373 -590"
+			"angles"	"0 0 0"
+			"triggerid"	"241172"
+			"output"	"OnTrigger"
+		}
+		"satcom"
+		{
+			"origin"	"-372 36 -482"
+			"angles"	"0 90 0"
+			"triggerid"	"379966"
+			"output"	"OnTrigger"
+			"portal"	"-215 -670 -466"
+		}
+		"satcom_control"
+		{
+			"origin"	"72 184 50"
+			"angles"	"0 90 0"
+			"triggerid" "satcom_satbtn2"
+			"output"	"OnPressed"
+			"bringall" "1"
+			"bringall_radius" "100"
+		}
+		"satcom_elevator"
+		{
+			"origin"	"44 1232 -528"
+			"angles"	"0 0 0"
+			"triggerid" "fd03_satcom_elevator_spawn"
+			"output"	"OnTrigger"
+		}
+		"basement1"
+		{
+			"origin"	"-723 685 -1005"
+			"angles"	"0 90 0"
+			"triggerid" "fd03_basement1_spawn"
+			"output"	"OnTrigger"
+		}
+		"basement2"
+		{
+			"origin"	"-1676 1476 -1068"
+			"angles"	"0 180 0"
+			"triggerid" "577076"
+			"output"	"OnTrigger"
+		}
+		"basement3"
+		{
+			"origin"	"-2128 1796 -588"
+			"angles"	"0 90 0"
+			"triggerid" "fd03_basement3_spawn"
+			"output"	"OnTrigger"
+		}
+	}
+}

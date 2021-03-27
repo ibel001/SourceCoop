@@ -1,0 +1,307 @@
+#base "base/further_data_campaign.edt"
+
+"config"
+{
+	"chapter" "Chapter One"
+	"nextmap" "fd02"
+	"equipment"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{
+				"item" "item_suit"
+				// Suit battery
+				"item" "item_battery"
+				"item" "item_battery"
+				// Crowbar 
+				"item" "item_weapon_crowbar"
+				// MP5 + glock + 137 reserve ammo
+				"item" "item_weapon_mp5"
+				"item" "item_weapon_glock"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+				// Shotgun + 32 reserve ammo
+				"item" "item_weapon_shotgun"
+				"item" "item_ammo_shotgun"
+				"item" "item_ammo_shotgun"
+				"item" "item_ammo_shotgun"
+			}
+			#else
+			{
+				"item" "item_suit"
+				// Crowbar
+				"item" "item_weapon_crowbar"
+			}
+		}
+	}
+	"entity"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{
+				"delete"
+				{
+					"classname" "logic_auto"
+					"hammerid" "1235"
+				}
+				"delete"
+				{
+					"classname" "logic_auto"
+					"hammerid" "8042"
+				}
+				// int_guard_seq2 trigger
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "222616"
+				}
+				// int_choreo trigger
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "223625"
+				}
+				// ele_choreo trigger
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "241611"
+				}
+				"delete"
+				{
+					"classname" "func_door"
+					"targetname" "int_sd_whiz"
+				}
+				"delete"
+				{
+					"classname" "func_button"
+					"targetname" "int_sd_button"
+				}
+				"delete"
+				{
+					"classname" "func_door"
+					"targetname" "int_sd_door"
+				}
+				// int_sd trigger
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "10852"
+				}				
+				// trigger all previous events
+				"add"
+				{
+					"classname" "logic_auto"
+					"spawnflags" "1"
+					"outputs"
+					{
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_sparks"
+							"input" "StartSpark"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_alarms_timer"
+							"input" "Enable"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_ceiltruss"
+							"input" "EnableMotion"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_ceiltruss_splode"
+							"input" "Explode"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_pc_beep1_timer"
+							"input" "Enable"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_airstrike_extinguisher"
+							"input" "EnableMotion"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_airstrike_ceil2"
+							"input" "Enable"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_airstrike_ceil1"
+							"input" "Disable"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_hall_lt"
+							"input" "TurnOff"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "fog_int"
+							"input" "TurnOn"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "color_cfg"
+							"input" "Enable"
+						}
+					}
+				}
+				// lab spawn trigger
+				"create"
+				{
+					"classname" "trigger_once"
+					"targetname" "fd01_lab_spawn"
+					"spawnflags" "1"
+					"functions"
+					{
+						"set_model"
+						{
+							"origin" "5567 -197 191"
+							"size" "510 246 129"
+						}
+					}
+				}
+				"modify"
+				{
+					"targetname" "int_alarms_timer"
+					"outputs"
+					{
+						"remove"
+						{
+							"output" "OnTimer"
+							"target" "int_alarms_lt_relay"
+							"input" "Trigger"
+						}
+					}
+				}
+				"modify"
+				{
+					"targetname" "end_start"
+					"outputs"
+					{
+						"add"
+						{
+							"output" "OnTrigger"
+							"target" "global"
+							"input" "TurnOff"
+						}
+					}
+				}
+			}
+			#else
+			{
+				"modify"
+				{
+					"classname" "func_door"
+					"targetname" "int_sd_whiz"
+					"set"
+					{
+						"origin" "804 673 122"
+					}
+				}
+				"modify"
+				{
+					"classname" "func_button"
+					"targetname" "int_sd_button"
+					"set"
+					{
+						"origin" "809 1240 117"
+					}
+				}
+				"modify"
+				{
+					"classname" "func_door"
+					"targetname" "int_sd_door"
+					"set"
+					{
+						"origin" "809 1216 117"
+					}
+				}
+				"modify"
+				{
+					"targetname" "01_02_changelevel"
+					"classname" "trigger_changelevel"
+					"add"
+					{
+						"StartDisabled" "1"
+						"spawnflags" "0"
+					}
+					"functions"
+					{
+						"copy_model"
+						{
+							"classname" "trigger_transition"
+							"targetname" "01_02_lm"
+						}
+					}
+				}
+				"modify"
+				{
+					"targetname" "int_ele_close_relay"
+					"outputs"
+					{
+						"add"
+						{
+							"output" "OnTrigger"
+							"target" "01_02_changelevel"
+							"input" "Enable"
+							"delay" "3"
+						}
+					}
+				}
+			}
+		}
+	}
+	"checkpoint"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{
+				"spawn_backtrack"
+				{
+					"origin" "196 -58 176"
+					"angles" "0 0 0"
+				}
+				"lab_backtrack"
+				{
+					"origin"    "5344 -96 178"
+					"angles"    "0 315 0"
+					"triggerid" "fd01_lab_spawn"
+					"output"    "OnTrigger"
+				}
+			}
+			#else
+			{
+				"spawn"
+				{
+					"origin" "896 778 44"
+					"angles" "0 270 0"
+				}
+			}
+		}
+	}
+}

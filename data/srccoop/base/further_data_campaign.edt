@@ -1,0 +1,14 @@
+// This file is inherited by each Further Data campaign map config
+
+#base "coop_base_sp_conversion.edt"
+
+"config"
+{
+	"campaign" "Further Data"
+	"console"
+	{
+	}
+	"entity_base_furtherdata_sp_campaign"
+	{
+	}
+}

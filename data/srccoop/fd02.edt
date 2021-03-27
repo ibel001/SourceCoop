@@ -1,0 +1,300 @@
+#base "base/further_data_campaign.edt"
+
+"config"
+{
+	"chapter" "Chapter One"
+	"nextmap" "fd03"
+	"nextmap" "fd01"
+	"equipment"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{
+				"item" "item_suit"
+				// Suit battery
+				"item" "item_battery"
+				"item" "item_battery"
+				// Crowbar 
+				"item" "item_weapon_crowbar"
+				// MP5 + glock + 137 reserve ammo
+				"item" "item_weapon_mp5"
+				"item" "item_weapon_glock"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+				// Shotgun + 32 reserve ammo
+				"item" "item_weapon_shotgun"
+				"item" "item_ammo_shotgun"
+				"item" "item_ammo_shotgun"
+				"item" "item_ammo_shotgun"
+			}
+			#else
+			{
+				"item" "item_suit"
+				// Suit battery
+				"item" "item_battery"
+				// Crowbar
+				"item" "item_weapon_crowbar"
+				// glock + 137 reserve ammo
+				"item" "item_weapon_glock"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+				"item" "item_ammo_mp5"
+			}
+		}
+	}
+	"entity"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{
+				// fix logic_auto outputs not firing
+				"modify"
+				{
+					"classname" "logic_auto"
+					"outputs"
+					{
+						"modify"
+						{
+							"output" "OnMapTransition"
+							"replace"
+							{
+								"output" "OnMapSpawn"
+							}
+						}
+					}
+				}
+				"modify"
+				{
+					"classname" "prop_physics"
+					"hammerid" "223525"
+					"add"
+					{
+						"targetname" "grd_boom_crate_explode"
+					}
+				}
+				"modify"
+				{
+					"classname" "prop_physics"
+					"hammerid" "19512"
+					"add"
+					{
+						"targetname" "int_box_crab"
+					}
+				}
+				// grd_booth_zombie2_seq
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "253148"
+				}
+				// grd_crabs_walk_seq
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "253268"
+				}
+				// guard_choreo1
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "986767"
+				}
+				// guard_seq1
+				"delete"
+				{
+					"classname" "trigger_once"
+					"hammerid" "986549"
+				}
+				// guard_choreo2_trigger
+				"delete"
+				{
+					"classname" "trigger_once"
+					"targetname" "guard_choreo2_trigger"
+				}
+				// delete tripmines
+				"delete"
+				{
+					"classname" "grenade_tripmine"
+				}
+				// trigger all previous events
+				"add"
+				{
+					"classname" "logic_auto"
+					"spawnflags" "1"
+					"outputs"
+					{
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "ware_hecu_grunts"
+							"input" "Kill"
+						}
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "ware_splode1"
+							"input" "Break"
+						}
+						// trigger grd_boom_crate_explode explosion
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "grd_boom_crate_explode"
+							"input" "Break"
+						}
+						// kill grd_booth_zombie
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "grd_booth_zombie"
+							"input" "BecomeRagdoll"
+						}
+						// break box
+						"add"
+						{
+							"output" "OnMapSpawn"
+							"target" "int_box_crab"
+							"input" "Break"
+						}
+					}
+				}
+				"modify"
+				{
+					"targetname" "01_02_changelevel"
+					"classname" "trigger_changelevel"
+					"add"
+					{
+						"StartDisabled" "1"
+						"spawnflags" "0"
+					}
+					"functions"
+					{
+						"copy_model"
+						{
+							"classname" "trigger_transition"
+							"targetname" "01_02_lm"
+						}
+					}
+				}
+				"modify"
+				{
+					"targetname" "int_ele_close_relay"
+					"outputs"
+					{
+						"add"
+						{
+							"output" "OnTrigger"
+							"target" "01_02_changelevel"
+							"input" "Enable"
+							"delay" "3"
+						}
+					}
+				}
+			}
+		}
+		// warehouse spawn trigger
+		"create"
+		{
+			"classname" "trigger_once"
+			"targetname" "fd02_warehouse_spawn"
+			"spawnflags" "1"
+			"functions"
+			{
+				"set_model"
+				{
+					"origin" "3168 -3028 -147"
+					"size" "810 730 60"
+				}
+			}
+		}
+		// yard spawn trigger
+		"create"
+		{
+			"classname" "trigger_once"
+			"targetname" "fd02_yard_spawn"
+			"spawnflags" "1"
+			"functions"
+			{
+				"copy_model"
+				{
+					"hammerid" "510068"
+				}
+			}
+		}
+		// block prev changlevel
+		"modify"
+		{
+			"hammerid" "460738"
+			"add"
+			{
+				"classname" "func_brush"
+				"rendermode" "10" // dont render
+			}
+		}
+	}
+	"checkpoint"
+	{
+		#if
+		{
+			"globalstate" "backtrack"
+			#then
+			{		
+				"spawn_backtrack"
+				{
+					"origin"	"1046 -3390 -197"
+					"angles"	"0 270 0"
+				}
+				"warehouse_backtrack"
+				{
+					"origin" "3176 -3478 -208"
+					"angles" "0 90 0"
+					"triggerid" "fd02_warehouse_spawn"
+					"output" "OnTrigger"
+				}
+				"guardroom_backtrack"
+				{
+					"origin" "1393 -2028 -13"
+					"angles" "0 0 0"
+					"triggerid" "1114700"
+					"output" "OnTrigger"
+				}
+			}
+			#else
+			{
+				"spawn"
+				{
+					"origin"	"-368 -896 53"
+					"angles"	"0 0 0"
+				}
+				"guardroom"
+				{
+					"origin"	"1500 -1163 -13"
+					"angles"	"0 0 0"
+					"triggerid"	"986767"
+					"output"	"OnTrigger"
+				}
+				"warehouse"
+				{
+					"origin"    "3000 -3085 -200"
+					"angles"    "0 0 0"
+					"triggerid" "fd02_warehouse_spawn"
+					"output"    "OnTrigger"
+					"bringall"  "1"
+					"bringall_radius" "50"
+				}
+				"yard"
+				{
+					"origin"	"510 -4243 -207"
+					"angles"	"0 -90 0"
+					"triggerid"	"fd02_yard_spawn"
+					"output"	"OnTrigger"
+				}
+			}
+		}
+	}
+}
