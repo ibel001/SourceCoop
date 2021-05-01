@@ -1,0 +1,26 @@
+#base "base/bm_sp_campaign.edt"
+
+"config"
+{
+	"chapter" "On A Rail"
+	"nextmap" "bm_c2a2b"
+	"equipment"
+	{
+		"lookup"
+		{
+			"targetname" "c2a2b_equipment"
+		}
+	}
+	"entity"
+	{
+	}
+	"checkpoint"
+	{
+		"train"
+		{
+			"origin" "0 0 30"
+			"angles" "0 0 0"
+			"followid" "c2a2a_tram_a_base"
+		}
+	}
+}
